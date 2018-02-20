@@ -1,0 +1,107 @@
+.container{
+	margin-top: 2%;
+	box-shadow: 7px 7px 20px 1px #b9c1cb;
+	border-radius: 6px;
+}
+
+.close{
+	margin: 1% 1% 0 0;
+}
+
+.close .fa {
+	float: right;
+	color: #e0e0e0;
+}
+
+.line22{
+	width: 100%;
+	size: 1px;
+	margin-bottom: 1%;
+	border: 1px;
+
+}
+
+.ord{
+	font-size: 16px;
+	font-family: 'Roboto';
+	color: #6fcf97;
+	text-transform: uppercase;
+	text-align: right;
+	margin-top: 0.25%;
+}
+
+.del{
+	font-size: 16px;
+	font-family: 'Roboto';
+	color: #eb5757;
+	text-transform: uppercase;
+	margin-top: 0.25%;
+}
+
+form{
+	margin: 3% 20% 3% 20%;
+	padding: 0 0 0% 0;
+}
+
+label{
+	font-family: 'Roboto';
+	font-size: 14px;
+	color: #b9c1cb;
+}
+
+.form-group{
+	margin-bottom: 5%;
+}
+
+.btn{
+	color: #fff;
+	font-family: 'Roboto';
+	font-size: 12px;
+	border-style: solid;
+	border-radius: 2px;
+	border-color: #9db5d4;
+	background-color: #9db5d4;
+	padding: 1% 5% 1% 5%;
+	border-width: 1px;
+	text-transform: uppercase;
+}
+
+button{
+	margin-bottom: 3%;
+}
+
+.payment{
+	display: inline-block;
+	width: 63%;
+	text-align: center;
+	margin: 3% 3% 5% 19%;
+}
+
+.choose{
+	font-family: 'Roboto';
+	font-size: 14px;
+	color: #818a97;
+	display: inline-block;
+	border-radius: 2px;
+	border-style: solid;
+	border-color: #b9c1cb;
+	border-width: 1px;
+	padding: 5% 15% 5% 15%;
+	text-align: center;
+	margin: 1% 2% 1% 2%;
+}
+
+@media screen and (max-width: 768px){
+	.line22 hr{
+		width: 50%;
+		text-align: center;
+	}
+
+	.ord{
+		text-align: center;
+	}
+
+	.del{
+		text-align: center;
+	}
+}

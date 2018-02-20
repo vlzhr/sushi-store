@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Beerroll // Заказ успешно оформлен!</title>
+	<link rel="stylesheet" href="style2.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'font-awesome-4.7.0/css/font-awesome.min.css')}}">
+  <link rel="icon" 
+      type="image/png" 
+      href="{{ url_for('static', filename='birroll.png') }}">
+	<style>
+      .popup {
+      	font-family: 'Open Sans', sans-serif;
+        display: block;
+        position: fixed;
+        top: 20%;
+        left: 30%;
+        width: 40%;
+        box-sizing: border-box;
+        color: #333;
+        border: 3px #333 solid;
+        border-radius: 8px;
+        padding: 20px 40px 50px;
+      }
+      .close {
+      	text-align: right;
+      	color: rgba(100,100,100,0.7);
+      }
+    </style>
+</head>
+<body>
+	<div class="popup">
+	  <a href="/"><div class="close"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div></a>
+      <h2>Заказ в обработке</h2>
+      <p>Спасибо за заказ! В ближайшее время с Вами свяжутся по оставленным контактам для подтверждения.</p>
+      
+    </div>
+</body>
+</html>

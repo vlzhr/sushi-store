@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin panel</title>
+    <style>
+		section {
+			font-family: 'Open Sans', sans-serif;
+			position: relative;
+			max-width: 920px;
+			margin: 0px auto;
+		}
+		input, select {
+			padding: 10px;
+			border-radius: 8px;
+			font-size: 17px;
+			color: #333;
+			width: 12%;
+			margin: 5px 0px;
+			border: 2px solid rgba(70,70,90,0.4);
+		}
+		input[name="desc"] {
+			width: 28%;
+		}
+		input[name="price"] {
+			width: 5%;
+		}
+		input[name="tags"] {
+			width: 18%;
+		}
+		input[name="n"] {
+			width: 5%;
+		}
+		input.data {
+			width: 50%;
+		}
+		input[type="file"] {
+			width: 45%;
+		}
+    </style>
+  </head>
+
+<body>
+
+	<section>
+		<h2><a href="/">На главную страницу</a>    <a href="/logout">Разлогиниться</a></h2>
+
+		<h2>Измените информацию</h2>
+		<form action="/change">
+			<input name="address" class="data" placeholder="Адрес" value="{{ data['address'] }}"><br>
+			<input name="min_price" class="data" placeholder="Минимальная цена заказа" value="{{ data['min_price'] }}"><br>
+			<input name="phone" class="data" placeholder="Телефон" value="{{ data['phone'] }}"><br>
+			<input type = 'submit' value = "Изменить">
+		</form>
+
+		<h2>Измените тэги</h2>
+		<form action="/add_tag">
+				<input type="text" name="tag" placeholder="Тэг">
+				<input type="text" name="n" placeholder="Порядок">
+				<input type="submit" value="Добавить">
+		</form>
+		{% for tag in tags %}
+			<form action="/change_tag">
+				<input type="text" name="tag" value="{{ tag }}" style="display: none">
+				<input type="text" name="new_tag" value="{{ tag }}">
+				<input type="text" name="n" placeholder="Порядок" value="{{ tags[tag] }}">
+				&nbsp;&nbsp;<a href="/del_tag?name={{ tag }}">удалить</a>&nbsp;&nbsp;<input type="submit" value="Изменить">
+			</form>
+		{% endfor %}
+
+		<h2>Управление товарами</h2>
+		<form action="/new_roll">
+			<input name="name" placeholder="Название">
+			<input name="price" placeholder="Цена">
+			<!-- <input type="text" name="tags" placeholder="Тэг"> -->
+			<select name="tags">
+				{% for tag in tags %}
+					<option value="{{tag}}">{{tag}}</option>
+				{% endfor %}	
+			</select>
+			<input type="text" name="desc" placeholder="Описание">
+			<input type="submit" value="Добавить">
+		</form>
+		{% for roll in rolls %}
+			<form action="/change_roll">
+				<input type="text" name="old_name" value="{{ roll['name'] }}" style="display: none">
+				<input type="text" name="name" value="{{ roll['name'] }}">
+				<input type="text" name="price" value="{{ roll['price'] }}">
+				<select name="tags">
+				{% for tag in tags %}
+					<option value="{{tag}}"{% if tag == roll['tags'][0] %} selected{% endif %}>{{tag}}</option>
+				{% endfor %}	
+				</select>
+				<input type="text" name="desc" value="{{ roll['desc'] }}">
+				&nbsp;&nbsp;<a href="/del_roll?name={{roll['name']}}">удалить</a>&nbsp;&nbsp;<input type="submit" value="Изменить">
+			</form>
+		{% endfor %}
+
+		<h2>Настройки слайдера</h2>
+		<form action="add_slide" method="POST" enctype="multipart/form-data">
+			Добавить слайд
+			<input type="file" name="img">
+			<input type="submit">
+		</form>
+		<br>
+		{% for slide in slides %}
+			<form action="/del_slide">
+				<div style="width: 100%; clear: both; float: left; margin-bottom: 15px;"><img style="max-width: 400px; float: left;" src="/static/images/slider/{{slide}}" alt="a"><input type="text" style="display:none" name="name" value="{{slide}}"><input type="submit" style="margin-left: 15px;" value="удалить"></form></div>
+			<br>
+			<br>
+		{% endfor %}
+	</section>
+
+</body>
+
+</html>

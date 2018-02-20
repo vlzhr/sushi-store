@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style1.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'font-awesome-4.7.0/css/font-awesome.min.css')}}">
+    <link rel="icon" 
+      type="image/png" 
+      href="{{ url_for('static', filename='birroll.png') }}">
+    <title>Beerroll</title>
+    <script>
+      function send_request(url) {
+        let resp = new XMLHttpRequest();
+        resp.open("GET", url, true);
+        resp.send();        
+      }
+
+      function onAddClick(target) {
+        location = `/add_tovar?name=${target.dataset.name}&tag=${target.dataset.tag}`;
+      }
+
+      function onMinusClick (target) {
+        location = add_url = `/minus_tovar?name=${target.dataset.name}&tag=${target.dataset.tag}`;
+      }
+
+      function onDelClick (target) {
+		location = add_url = `/zero_tovar?name=${target.dataset.name}&tag=${target.dataset.tag}`;
+      }
+
+
+      function onClick ({target}) {
+      	if (target.dataset.val === "+") {
+      		onAddClick(target)
+      	} else if (target.dataset.val === "-") {
+			onMinusClick(target)
+		} else if (target.dataset.val === "0") {
+			onDelClick(target)
+		}
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const items = document.querySelector('.items');
+        items.addEventListener("click", onClick);      
+      })
+    </script>
+    <style>
+    	i {
+    		cursor: pointer;
+    		transition: width 0.2s;
+    	}
+    	i:hover {
+    		width: 30px;
+    	}
+    	.decriptrion {
+    		padding-left: 5%;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: -webkit-box;
+		    -webkit-box-orient: vertical;
+		    -webkit-line-clamp: 2; /* number of lines to show */
+		    line-height: 17px;        /* fallback */
+		    max-height: 51px;       /* fallback */
+    	}
+    </style>
+  </head>
+
+
+  <body>
+    <div class="container">
+      <div class="order">
+        <a href="/"><div class="close"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div></a>
+
+        <br/>
+        <br/>
+        <br/>
+
+
+          <div class="row">
+            <div class="ord col-md-5">Заказ</div>
+            <div class="line22 col-md-2"><hr/></div>
+            <div class="del col-md-5">Доставка</div>
+          </div>
+
+
+        <hr class="divider">
+        <div class="position">
+          <div class="row items">
+
+            {% for roll in rolls%}
+            <div class="picture col-xs-12 col-md-2"><center><img src="{{ url_for('static', filename = 'images/' + roll['image']) }}" width="100%"></center></div>
+            <div class="name col-xs-12 col-md-5">
+              <h4>{{roll['name']}}</h4>
+              <p>{{roll['desc']}}</p>
+            </div>
+            <div class="price col-xs-4 col-md-1"><p class="pr">{{roll['price']}} &#8381;</p></div>
+            <div class="quantity class col-xs-4 col-md-2"><center>
+              <i class="fa fa-minus-square-o fa-2x" aria-hidden="true" data-tag="{{roll['tags'][0]}}" data-name="{{roll['name']}}" data-val="-"></i>
+              <span class="number">{{roll['count']}}</span>
+              <i class="fa fa-plus-square-o fa-2x" aria-hidden="true" data-tag="{{roll['tags'][0]}}" data-name="{{roll['name']}}" data-val="+"></i></center>
+            </div>
+            <div class="summ col-xs-4 col-md-1"><p class="summ1">{{ int(roll['price']) * roll['count'] }}&#8381;</p></div>
+            <div class="delete col-xs-12 col-md-1"><center><i data-name="{{roll['name']}}" data-tag="{{roll['tags'][0]}}" class="fa fa-window-close-o fa-2x" aria-hidden="true" data-val="0"></i></center></div>
+            {% endfor %}
+
+
+          </div>
+        </div>
+        <hr class="divider">
+        
+
+
+        <hr class="divider">
+        <p class="itog">Итого: {{ sum }}&#8381;</p><br><br>
+        <p class="delivery">Бесплатная доставка от {{data['min_price']}}&#8381;</p><br><br>
+        {% if sum != 0 %}<center><a href="/zakas"><button type="submit" class="btn btn-primary">Дальше</button></a></center>
+        {% else %}<center><a><button type="submit" class="btn btn-primary">Корзина пуста</button></a></center>
+        {% endif %}
+      </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  </body>
+</html>
